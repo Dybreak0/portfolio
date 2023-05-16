@@ -1,1 +1,23 @@
-<p>login works!</p>
+<div class="d-flex justify-content-center">
+  <form class="login-form d-flex flex-column justify-content-center" [formGroup]="loginFormGroup" >
+    <div class="d-flex flex-column">
+      <input type="text" formControlName="username" />
+      <div class="error-message">
+        <ng-container *ngIf="loginFormGroup.get('username')?.hasError('required')">
+          Username is a required field.
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column">
+      <input type="password" formControlName="password" />
+      <div class="error-message">
+        <ng-container *ngIf="loginFormGroup.get('password')?.hasError('required')">
+          Password is a required field.
+        </ng-container>
+      </div>
+    </div>
+
+    <input type="button" value="Login" (click)="login()" />
+  </form>
+</div>
