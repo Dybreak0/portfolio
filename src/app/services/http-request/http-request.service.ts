@@ -6,7 +6,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpRequestService {
-  private readonly url: string = "https://netzwelt-devtest.azurewebsites.net/";
+  private readonly url: string = "https://netzwelt-devtest.azurewebsites.net";
 
   constructor(private httpClient: HttpClient) { }
 
