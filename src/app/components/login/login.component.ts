@@ -12,8 +12,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginComponent implements OnInit {
   public loginFormGroup: FormGroup;
 
-  constructor(private auth: AuthService,
-    private router: Router) {
+  constructor(private router: Router,
+    private authService: AuthService) {
     this.loginFormGroup = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -21,13 +21,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    if(this.authService.isLoggedIn()) {
+      this.router.navigateByUrl("home/index");
+    }
   }
 
   public login(): void {
     if(this.loginFormGroup.valid) {
       const payload: Credentials = new Credentials(this.loginFormGroup.get("username")?.value, this.loginFormGroup.get("password")?.value);
-      this.auth.login(payload)
+      this.authService.login(payload)
       .then((result: any) => {
         this.router.navigateByUrl("home/index");
       })
