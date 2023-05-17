@@ -1,40 +1,44 @@
 <div class="d-flex justify-content-center">
-  <form class="login-form d-flex flex-column justify-content-center" [formGroup]="loginFormGroup" >
+  <div class="login-form d-flex align-items-center">
+    <form class="d-flex flex-column justify-content-center border p-5" [formGroup]="loginFormGroup" >
 
-    <div class="h4 text-center">
-      NETZWELT RECRUITMENT EXERCISE
-    </div>
-    <div class="d-flex flex-column">
-      <input type="text" formControlName="username" (keyup.enter)="login()" />
+      <div class="h4 text-center mb-4">
+        NETZWELT RECRUITMENT EXERCISE
+      </div>
+      <div class="d-flex flex-column">
+        <label for="username">Username</label>
+        <input type="text" formControlName="username" id="username" (keyup.enter)="login()" />
 
-      <p class="error-message">
-        <ng-container *ngIf="loginFormGroup.get('username')?.invalid &&
-                      loginFormGroup.get('username')?.errors &&
-                      (loginFormGroup.get('username')?.dirty ||
-                      loginFormGroup.get('username')?.touched)">
-          <span class="ceb-ico ico-error_invalid"></span>
-          <ng-container *ngIf="loginFormGroup.get('username')?.hasError('required')">
-            Username Type is a required field.
+        <div class="error-message">
+          <ng-container *ngIf="loginFormGroup.get('username')?.invalid &&
+                        loginFormGroup.get('username')?.errors &&
+                        (loginFormGroup.get('username')?.dirty ||
+                        loginFormGroup.get('username')?.touched)">
+            <span class="ceb-ico ico-error_invalid"></span>
+            <ng-container *ngIf="loginFormGroup.get('username')?.hasError('required')">
+              Username Type is a required field.
+            </ng-container>
           </ng-container>
-        </ng-container>
-      </p>
-    </div>
+        </div>
+      </div>
 
-    <div class="d-flex flex-column">
-      <input type="password" formControlName="password" (keyup.enter)="login()" />
-      <p class="error-message">
-        <ng-container *ngIf="loginFormGroup.get('password')?.invalid &&
-                      loginFormGroup.get('password')?.errors &&
-                      (loginFormGroup.get('password')?.dirty ||
-                      loginFormGroup.get('password')?.touched)">
-          <span class="ceb-ico ico-error_invalid"></span>
-          <ng-container *ngIf="loginFormGroup.get('password')?.hasError('required')">
-            Password Type is a required field.
+      <div class="d-flex flex-column">
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" (keyup.enter)="login()" />
+        <div class="error-message">
+          <ng-container *ngIf="loginFormGroup.get('password')?.invalid &&
+                        loginFormGroup.get('password')?.errors &&
+                        (loginFormGroup.get('password')?.dirty ||
+                        loginFormGroup.get('password')?.touched)">
+            <span class="ceb-ico ico-error_invalid"></span>
+            <ng-container *ngIf="loginFormGroup.get('password')?.hasError('required')">
+              Password Type is a required field.
+            </ng-container>
           </ng-container>
-        </ng-container>
-      </p>
-    </div>
+        </div>
+      </div>
 
-    <input type="button" value="Login" (click)="login()" [disabled]="loginFormGroup.invalid" />
-  </form>
+      <input class="mt-3" type="button" value="Login" (click)="login()" [disabled]="loginFormGroup.invalid" />
+    </form>
+  </div>
 </div>

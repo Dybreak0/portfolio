@@ -19,6 +19,7 @@ export class HomeComponent {
       .then((result: Territories) => {
         const rootUl = document.createElement('ul');
         rootUl.id = 'myUL';
+        rootUl.classList.add("container");
 
         // Append the root ul element to the document body
         document.body.appendChild(rootUl);
