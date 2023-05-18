@@ -1,18 +1,13 @@
 ul, #myUL {
   list-style-type: none;
 }
-#my2UL1 {
-  background-color: blue;
-}
 
 #myUL {
   margin: 0;
   padding: 0;
-  background-color: red;
 }
 
 .caret {
-  color: red;
   cursor: pointer;
   -webkit-user-select: none; /* Safari 3.1+ */
   -moz-user-select: none; /* Firefox 2+ */
@@ -39,4 +34,8 @@ ul, #myUL {
 
 .active {
   display: block;
+}
+
+ul {
+  margin-left: 15px;
 }

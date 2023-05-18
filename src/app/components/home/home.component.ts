@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
 import { Territories } from 'src/app/models/Territories.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ListService } from 'src/app/services/list/list.service';
@@ -12,20 +12,21 @@ export class HomeComponent {
   public temp: any;
   public arrangedList: any;
   constructor(private listService: ListService,
-    private authService: AuthService) {
-    listService.getAllTerritories();
-
+    private authService: AuthService,
+    private el: ElementRef,
+    private renderer: Renderer2) {
     listService.getAllTerritories()
       .then((result: Territories) => {
-        const rootUl = document.createElement('ul');
+        const rootUl = this.renderer.createElement('ul');
         rootUl.id = 'myUL';
-        rootUl.classList.add("container");
 
-        // Append the root ul element to the document body
-        document.body.appendChild(rootUl);
+        // Append the root ul element
+        this.el.nativeElement.appendChild(rootUl);
 
         // Generate the HTML hierarchy
         this.generateHTML(result.data, null, rootUl);
+
+        this.addEvent();
       })
       .catch((): void => {
         alert("Failed to retrieve list of territories");
@@ -33,21 +34,20 @@ export class HomeComponent {
   }
 
   generateHTML(records: any, parentId: string | null, parentElement: HTMLElement): void {
-    const ul = document.createElement('ul');
+    const ul = this.renderer.createElement('ul');
     ul.classList.add("nested");
 
     for (const record of records) {
       if (record.parent === parentId) {
-        const li = document.createElement('li');
-        const span = document.createElement('span');
+        const li = this.renderer.createElement('li');
+        const span = this.renderer.createElement('span');
         span.textContent = record.name;
-        span.classList.add('caret');
-        span.addEventListener("click", this.toggle);
 
         li.appendChild(span);
 
         const children = records.filter((r: any) => r.parent === record.id);
         if (children.length > 0) {
+          span.classList.add('caret');
           this.generateHTML(records, record.id, li);
         }
 
@@ -55,14 +55,21 @@ export class HomeComponent {
       }
     }
 
+    // parentElement.appendChild(ul);
     parentElement.appendChild(ul);
   }
 
-  toggle(event: any) {
-    const targetElement: HTMLElement = event.target as HTMLElement;
-    var nested = targetElement.parentElement?.querySelector(".nested");
-    nested?.classList.toggle("active");
-    targetElement.classList.toggle("caret-down");
+  addEvent() {
+    var firstUL = document.getElementById("myUL");
+    firstUL?.parentElement?.querySelector(".nested")?.classList.add("active");
+
+    var toggler = document.getElementsByClassName("caret");
+    for (let i = 0; i < toggler.length; i++) {
+      toggler[i].addEventListener("click", function() {
+        toggler[i].parentElement?.querySelector(".nested")?.classList.toggle("active");
+        toggler[i].classList.toggle("caret-down");
+      });
+    }
   }
 
   logout(): void {
